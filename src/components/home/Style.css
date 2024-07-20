@@ -1,0 +1,42 @@
+.button {
+    border-radius: 25px; 
+    --bs-btn-color: #000;
+    --bs-btn-bg: #D7F03A;
+    --bs-btn-border-color: #fff;
+    margin-top: 50px;
+    --bs-btn-active-bg: #0a7242;
+}
+.booked-button {
+    border-radius: 25px; 
+    --bs-btn-color: #000;
+    --bs-btn-bg: #D7F03A;
+    --bs-btn-border-color: #fff;
+    --bs-btn-active-bg: #0a7242;
+}
+.cancel-button {
+    border-radius: 25px; 
+}
+.cycle {
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    /* height: 851px;
+    width: 1519px;
+    padding-top: 50px; */
+}
+.button:hover {
+    --bs-btn-hover-color: #fff;
+    background-color: #0a7242;
+    border-color: #fff;
+}
+.booked-button:hover {
+    --bs-btn-hover-color: #fff;
+    background-color: #0a7242;
+    border-color: #fff;
+}
+.modalbody {
+    text-align: center;
+}
+.my-cal {
+    margin-left: 50px;
+}
