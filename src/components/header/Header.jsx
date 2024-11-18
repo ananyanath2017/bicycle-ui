@@ -12,12 +12,12 @@ function Header() {
             <Container>
                 <Navbar.Brand href="#home"> <img src={Logo} className="Logo"></img></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" style={{paddingLeft: '25%'}}>
                     <Nav className="me-auto">
                         <Nav.Link className="menu" href="#home">Home</Nav.Link>
-                        <Nav.Link className="menu" href="#link">Link</Nav.Link>
                         <Nav.Link className="menu" href="#shop">Shop</Nav.Link>
-                        <Nav.Link className="menu" href="#contact">Contact Us</Nav.Link>
+                        <Nav.Link className="menu" href="#shop">About us</Nav.Link>
+                        <Nav.Link className="menu" href="#contact">Contact</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

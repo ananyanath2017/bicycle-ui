@@ -1,90 +1,134 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Heading from './Heading.jpg';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Alert from 'react-bootstrap/Alert';
-import Calendar from 'react-calendar';
+import axios from 'axios'
 import Cycle from './r.png';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './Style.css';
-import 'react-calendar/dist/Calendar.css';
 
-export default class HomeNew extends Component {
+
+class HomeNew extends Component {
   constructor(props) {
-    super(props)
-
+    super(props);
     this.state = {
-      name: "",
-      email: "",
-      date: "",
-      an: false,
-    }
+      show: false,
+      email: '',
+      rideDate: null
+    };
   }
-  handleChange = (event) => {
-    this.setState({ name: event.target.value });
+
+  getToday = () => {
+    const today = new Date();
+    return today;
   }
+
+  handleEmailChange = (e) => {
+    this.setState({ email: e.target.value });
+  }
+
+  handleDateChange = (date) => {
+    this.setState({ rideDate: date.toLocaleDateString() });
+  }
+
   handleClose = () => {
-    this.setState({
-      an: false
-    })
-  };
-  handleBook = () => {
-    this.handleClose()
-    // alert('Your appointment is booked')
+    this.setState({ show: false });
   }
-  handleShow = () => {
-    this.setState({
-      an: true
+
+  handleBook = () => {
+    const request = {
+      email: this.state.email,
+      date: this.state.rideDate,
+    }
+    const URL = "https://bicycle-api.onrender.com/rides"
+    axios.post(URL, request)
+    .then((res) => {
+      if(res.status == 201) {
+        alert('Your appointment is booked!');
+        this.setState(
+          {
+            email: '', 
+            rideDate: null,
+            show: false
+          }
+        )
+      } 
     })
-  };
+    .catch(err => {
+      alert(err.response.data.error);
+    })
+    
+  }
+
+  handleShow = () => {
+    this.setState({ show: true });
+  }
+
   render() {
     return (
-      <div>
-        <Container>
-          <Row>
-            <Col><img src={Heading}></img></Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button variant="primary" className='button' onClick={this.handleShow()}>
-                Book A Test Ride
-              </Button>
-              <Modal show={this.state.an} onHide={this.handleClose()}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Do you want to book it?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='modalbody'>
-                  Woohoo, your booking is completed!
-                  <div className='my-cal'>
-                    <Calendar />
-                  </div>
+      <Container>
+        <Row style={{paddingBottom: '3%'}}>
+          <Col>
+            <img src={Heading} alt="Heading" />
+          </Col>
+        </Row>
+        <Row style={{paddingBottom: '3%'}}>
+          <Col>
+            <Button variant="primary" >
+              Check Test Ride Date
+            </Button>
+          </Col>
+          <Col>
+            <Button variant="primary" onClick={this.handleShow}>
+              Book A Test Ride
+            </Button>
+          </Col>
+        </Row>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Do you want to book it?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className='modalbody'>
+            <div style={{ paddingLeft: '10%', textAlign: 'left' }}>
+              <label style={{ fontWeight: 'bold', paddingRight: '10%', textAlign: 'left' }} >Email : </label>
+              <input type="text" placeholder='Your email here' value={this.state.email} onChange={this.handleEmailChange} />
+            </div>
+            <div style={{ paddingLeft: '10%',textAlign: 'left' }}>
+              <label style={{ fontWeight: 'bold', paddingRight: '2.5%', textAlign: 'left' }} >Ride date : </label>
+              <DatePicker
+                selected={this.state.rideDate}
+                onChange={this.handleDateChange}
+              />
+            </div>
 
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" className='cancel-button' onClick={this.handleClose()}>
-                    Cancel
-                  </Button>
-                  <Button variant="primary" className='booked-button' onClick={this.handleBook()}>
-                    Booked
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </Col>
-          </Row>
-          <Row> <input type="text" value={this.state.name} onChange={this.handleChange} />
-            <h1> Name : {this.state.name}</h1>
-            <h1> Email : {this.state.email} </h1></Row>
+            <div>
+              <p>{this.state.email}</p>
+              <p>{this.state.rideDate}</p>
 
-          <Row>
-            <Col>
-              <img src={Cycle} className='cycle'></img>
-              {/* <img src={Cycle} width="1519px" height="851px"></img> */}
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    )
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+
+            <Button variant="secondary" onClick={this.handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={this.handleBook}>
+              Booked
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Row>
+          <Col>
+            <img src={Cycle} className='cycle'></img>
+          </Col>
+        </Row>
+      </Container>
+    );
   }
 }
+
+export default HomeNew;
