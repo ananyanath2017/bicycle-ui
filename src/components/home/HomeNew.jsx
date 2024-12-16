@@ -5,14 +5,13 @@ import Col from 'react-bootstrap/Col';
 import Heading from './Heading.jpg';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios'
 import Cycle from './r.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Style.css';
 import AllBookedRidersList from './AllBookedRidersList';
-
+import { Link } from 'react-router-dom';
 
 class HomeNew extends Component {
   constructor(props) {
@@ -123,7 +122,11 @@ class HomeNew extends Component {
         </Row>
         <Row>
           <Col>
-            <img src={Cycle} className='cycle'></img>
+            {/* <img src={Cycle} className='cycle'></img> */}
+            <Link to="/shop">
+              <img src={Cycle} className='cycle'></img>
+            </Link>
+
           </Col>
         </Row>
         <Modal show={this.state.show} onHide={this.handleClose}>
