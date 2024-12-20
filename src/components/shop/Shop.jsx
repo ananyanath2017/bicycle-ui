@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Cycle from './Cycle.jpg';
 import ProductList from "./ProductList";
+import ProductListAPI from './ProductListAPI';
 
 export default class Shop extends Component {
 
@@ -126,6 +127,7 @@ export default class Shop extends Component {
     return (
       <div>
         <ProductList products={this.state.allCycles} />
+        <ProductListAPI products={this.state.allCycles} />
         {/* <h1> This is Shop Page </h1> */}
         {/* <Container>
           <Row style={{ paddingBottom: '3%' }}>
